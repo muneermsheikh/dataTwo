@@ -1,0 +1,28 @@
+import { HttpClient } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss']
+})
+export class AppComponent implements OnInit {
+  baseUrl = 'https://localhost:5001/api/'
+  title = 'Ideal Solutions';
+  users: any;
+
+  constructor(private http: HttpClient) {}
+
+  ngOnInit() {
+    this.getUsers();
+  }
+
+  getUsers() {
+    this.http.get(this.baseUrl + 'users').subscribe(response => {
+      this.users = response;
+    }, error => {
+      console.log(error);
+    })
+  }
+
+}
