@@ -50,7 +50,7 @@ namespace api.Controllers
         {
             var user = await _context.Users
                 .Where(x => x.UserName.ToLower() == loginDto.Username.ToLower())
-                //.Include(p => p.Photos)
+                .Include(p => p.Photos)
                 .SingleOrDefaultAsync();    //x => x.UserName.ToLower() == loginDto.Username.ToLower());
 
             if (user == null) return Unauthorized("Invalid username");
@@ -71,7 +71,7 @@ namespace api.Controllers
             {
                 Username = user.UserName,
                 Token = _tokenService.CreateToken(user),
-                //PhotoUrl = user.Photos.FirstOrDefault(x => x.IsMain)?.Url,
+                PhotoUrl = user.Photos.FirstOrDefault(x => x.IsMain)?.Url
                 //KnownAs = user.KnownAs,
                 //Gender = user.Gender
             };

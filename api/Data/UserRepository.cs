@@ -40,6 +40,14 @@ namespace api.Data
             return await _context.Users.FindAsync(id);
         }
 
+        public async Task<AppUser> GetUserByUserNameAsync (string username)
+        {
+            return await _context.Users
+                .Where(x => x.UserName.ToLower() == username.ToLower())
+                .Include(p => p.Photos)
+                .SingleOrDefaultAsync();
+        }
+
         public async Task<string> GetUserGender(string username)
         {
             return await _context.Users
