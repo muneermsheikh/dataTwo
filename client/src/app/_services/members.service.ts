@@ -38,6 +38,7 @@ export class MembersService {
     this.userParams = new UserParams(this.user);
     return this.userParams;
   }
+
   getMembers(userParams: UserParams) {
     var response = this.memberCache.get(Object.values(userParams).join('-'));
     if (response) return of(response);
@@ -87,6 +88,13 @@ export class MembersService {
     return this.http.post(this.baseUrl + 'likes/' + username, {})
   }
 
+  getLikes(predicate: string, pageNumber: number, pageSize: number) {
+    let params = this.getPaginationHeaders(pageNumber, pageSize);
+    params = params.append('predicate', predicate);
+    return this.getPaginatedResult<Partial<Member[]>>(this.baseUrl + 'likes', params);
+    //return this.http.get<Partial<Member[]>>(this.baseUrl + 'likes?predicate=' + predicate);
+  }
+
   private  getPaginatedResult<T>(url, params) {
     const paginatedResult: PaginatedResult<T> = new PaginatedResult<T>();
     return this.http.get<T>(url, { observe: 'response', params }).pipe(
@@ -108,11 +116,5 @@ export class MembersService {
 
     return params;
   }
-/* 
-  getLikes(predicate: string, pageNumber, pageSize) {
-    let params = getPaginationHeaders(pageNumber, pageSize);
-    params = params.append('predicate', predicate);
-    return getPaginatedResult<Partial<Member[]>>(this.baseUrl + 'likes', params, this.http);
-  }
-*/ 
+
 }
