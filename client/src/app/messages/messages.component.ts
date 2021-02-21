@@ -13,9 +13,10 @@ export class MessagesComponent implements OnInit {
   baseUrl = environment.apiUrl;
   pagination: Pagination;
   messages: Message[]=[];
-  container = 'Inbox';
+  container = 'Unread';
   pageNumber = 1;
   pageSize = 3;
+  loading = false;
 
   constructor(private messageService: MessageService) { }
 
@@ -24,15 +25,23 @@ export class MessagesComponent implements OnInit {
   }
 
   loadMessages() {
+    this.loading=true;
     return this.messageService.getMessages(this.pageNumber, this.pageSize, this.container)
       .subscribe (response => {
         this.messages = response.result;
-        this.pagination = response.pagination;;
+        this.pagination = response.pagination;
+        this.loading=false;
       })
   }
 
-  pageChanged(event: any) {
-    this.pageNumber = event.pageNumber;
-    this.loadMessages();
-  }
+    pageChanged(event: any) {
+      this.pageNumber = event.pageNumber;
+      this.loadMessages();
+    }
+
+    deleteMessage(id: number) {
+      return this.messageService.deleteMessage(id).subscribe(() => {
+        this.messages.splice(this.messages.findIndex(m => m.id == id),1);
+      })
+    }
 }

@@ -21,16 +21,20 @@ export class MemberDetailComponent implements OnInit {
   activeTab: TabDirective;
   messages : Message[] = [];
   
-  constructor(private route: ActivatedRoute,
+  constructor(private memberService: MembersService, private route: ActivatedRoute,
     private toast: ToastrService, private messageService: MessageService) { }
 
   ngOnInit(): void {
-    this.route.data.subscribe(data => {
+    this.loadMember();
+    
+    /* this.route.data.subscribe(data => {    //remove comments if route resolver used
       this.member = data.member;
     })
-
+    */
+    
+    //commetn out flg if route resolver used.
     this.route.queryParams.subscribe(params => {
-      params.tab ? this.selectTab(params.tab) : this.selectTab(0);
+      params.tab ? this.selectTab(params.tab) : this.selectTab(0);    //activate the tab contained in query params
     })
 
     this.galleryOptions = [{
@@ -41,15 +45,23 @@ export class MemberDetailComponent implements OnInit {
       imageAnimation: NgxGalleryAnimation.Slide,
       preview: false
     }]
-    this.galleryImages = this.getImages();
+    //this.galleryImages = this.getImages();    //remove comments if route resolver used
   }
 
+  loadMember() {
+    this.memberService.getMember(this.route.snapshot.paramMap.get('username')).subscribe( member => {
+      this.member = member;
+      this.galleryImages = this.getImages();
+    })
+  }
  
   loadMessages() {
-    this.messageService.getMessageThread(this.member.username).subscribe(response =>
-      {
-        this.messages = response;
-      })
+    if(this.member !== undefined){
+      this.messageService.getMessageThread(this.member.username).subscribe(response =>
+        {
+          this.messages = response;
+        })
+    }
   }
 
   onTabActivated(data: TabDirective) {
