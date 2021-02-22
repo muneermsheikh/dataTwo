@@ -13,6 +13,7 @@ import { MessageService } from 'src/app/_services/message.service';
   templateUrl: './member-detail.component.html',
   styleUrls: ['./member-detail.component.scss']
 })
+
 export class MemberDetailComponent implements OnInit {
   @ViewChild('memberTabs', {static: true}) memberTabs: TabsetComponent;
   member: Member;
@@ -21,21 +22,21 @@ export class MemberDetailComponent implements OnInit {
   activeTab: TabDirective;
   messages : Message[] = [];
   
-  constructor(private memberService: MembersService, private route: ActivatedRoute,
+  constructor(private route: ActivatedRoute,
     private toast: ToastrService, private messageService: MessageService) { }
 
   ngOnInit(): void {
-    this.loadMember();
+    //this.loadMember();
     
-    /* this.route.data.subscribe(data => {    //remove comments if route resolver used
+     this.route.data.subscribe(data => {    //remove comments if route resolver used
       this.member = data.member;
     })
-    */
+    
     
     //commetn out flg if route resolver used.
-    this.route.queryParams.subscribe(params => {
-      params.tab ? this.selectTab(params.tab) : this.selectTab(0);    //activate the tab contained in query params
-    })
+    //this.route.queryParams.subscribe(params => {
+      //params.tab ? this.selectTab(params.tab) : this.selectTab(0);    //activate the tab contained in query params
+    //})
 
     this.galleryOptions = [{
       width: '500px',
@@ -45,16 +46,18 @@ export class MemberDetailComponent implements OnInit {
       imageAnimation: NgxGalleryAnimation.Slide,
       preview: false
     }]
-    //this.galleryImages = this.getImages();    //remove comments if route resolver used
+    this.galleryImages = this.getImages();    //remove comments if route resolver used
   }
 
+  /*
   loadMember() {
     this.memberService.getMember(this.route.snapshot.paramMap.get('username')).subscribe( member => {
       this.member = member;
       this.galleryImages = this.getImages();
     })
   }
- 
+ */
+
   loadMessages() {
     if(this.member !== undefined){
       this.messageService.getMessageThread(this.member.username).subscribe(response =>
