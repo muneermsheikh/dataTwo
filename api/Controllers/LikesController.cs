@@ -47,14 +47,14 @@ namespace api.Controllers
         [HttpGet]
         public async Task<ActionResult<PagedList<UserLike>>> GetUserLikes([FromQuery] LikesParams likesParams)
         {
-            if (string.IsNullOrEmpty(likesParams.Predicate)) return BadRequest("preedicate not specified");
+            if (string.IsNullOrEmpty(likesParams.Predicate)) return BadRequest("predicate not specified");
             likesParams.UserId = User.GetUserId();
 
             var users = await _unitOfWork.LikesRepository.GetUserLikes(likesParams);
 
             Response.AddPaginationHeader(users.CurrentPage,
                 users.PageSize, users.TotalCount, users.TotalPages);
-
+ 
             return Ok(users);
         }
     }
