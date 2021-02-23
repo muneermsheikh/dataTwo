@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using api.DTOs;
 using api.Entities;
@@ -25,7 +26,6 @@ namespace api.Helpers
                     src.Sender.Photos.FirstOrDefault(x => x.IsMain).Url))
                 .ForMember(dest => dest.RecipientPhotoUrl, opt => opt.MapFrom(src => 
                     src.Recipient.Photos.FirstOrDefault(x => x.IsMain).Url));
-        
         }
     }
 }

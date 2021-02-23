@@ -12,36 +12,34 @@ namespace api.Controllers
     [Authorize]
     public class LikesController : BaseApiController
     {
-        private readonly ILikesRepository _likesRepository;
-        private readonly IUserRepository _userRepository;
-        public LikesController(ILikesRepository likesRepository,
-        IUserRepository userRepository)
+        private readonly IUnitOfWork _unitOfWork;
+        public LikesController(IUnitOfWork unitOfWork)
         {
-            _userRepository = userRepository;
-            _likesRepository = likesRepository;
+            _unitOfWork = unitOfWork;
         }
 
         [HttpPost("{username}")]
-        public async Task<ActionResult> AddLike (string username)
+        public async Task<ActionResult> AddLike(string username)
         {
             var loggedInUserId = User.GetUserId();        //the loggedin userid
-            var likedUser = await _userRepository.GetUserByUserNameAsync(username);
+            var likedUser = await _unitOfWork.UserRepository.GetUserByUserNameAsync(username);
             if (likedUser == null) return NotFound();
-            var loggedInUser = await _likesRepository.GetUserWithLikes(loggedInUserId); //loggedin User
+            var loggedInUser = await _unitOfWork.LikesRepository.GetUserWithLikes(loggedInUserId); //loggedin User
             if (loggedInUser.UserName == username) return BadRequest("You cannot like yourself");
 
-            var userLike = await _likesRepository.GetUserLike(loggedInUserId, likedUser.Id);
+            var userLike = await _unitOfWork.LikesRepository.GetUserLike(loggedInUserId, likedUser.Id);
 
             if (userLike != null) return BadRequest("You already likedhis user");
 
-            userLike = new UserLike {
+            userLike = new UserLike
+            {
                 SourceUserId = loggedInUserId,
                 LikedUserId = likedUser.Id
             };
-            
+
             loggedInUser.LikedUsers.Add(userLike);
 
-            if (await _userRepository.SaveAllAsync()) return Ok();
+            if (await _unitOfWork.Complete()) return Ok();
 
             return BadRequest("Failed to like the User");
         }
@@ -52,12 +50,12 @@ namespace api.Controllers
             if (string.IsNullOrEmpty(likesParams.Predicate)) return BadRequest("preedicate not specified");
             likesParams.UserId = User.GetUserId();
 
-            var users = await _likesRepository.GetUserLikes(likesParams);
+            var users = await _unitOfWork.LikesRepository.GetUserLikes(likesParams);
 
             Response.AddPaginationHeader(users.CurrentPage,
                 users.PageSize, users.TotalCount, users.TotalPages);
-            
+
             return Ok(users);
         }
-}
+    }
 }
