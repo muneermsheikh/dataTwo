@@ -1,8 +1,5 @@
 using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
 using System.Threading.Tasks;
-using api.Data;
 using api.DTOs;
 using api.Entities;
 using api.Interfaces;
@@ -41,7 +38,7 @@ namespace api.Controllers
             
             if (!result.Succeeded) return BadRequest(result.Errors);
 
-            var roleResult = await _userManager.AddToRoleAsync(user, "Member");
+            var roleResult = await _userManager.AddToRoleAsync(user, "candidate");  // registerDto.UserRole);
             
             if (!roleResult.Succeeded) return BadRequest(roleResult.Errors);
             

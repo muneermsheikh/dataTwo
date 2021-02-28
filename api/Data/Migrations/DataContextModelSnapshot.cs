@@ -100,6 +100,49 @@ namespace api.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("api.Entities.Address", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Add")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int?>("AppUserId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Country")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("IsMain")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Location")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Pin")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("State")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("StreetAdd")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AppUserId");
+
+                    b.ToTable("Address");
+                });
+
             modelBuilder.Entity("api.Entities.AppRole", b =>
                 {
                     b.Property<int>("Id")
@@ -133,6 +176,9 @@ namespace api.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("AadharNo")
+                        .HasColumnType("TEXT");
+
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("INTEGER");
 
@@ -158,6 +204,12 @@ namespace api.Data.Migrations
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("FamilyName")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Gender")
                         .HasColumnType("TEXT");
@@ -199,6 +251,9 @@ namespace api.Data.Migrations
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("SecondName")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("TEXT");
@@ -263,6 +318,24 @@ namespace api.Data.Migrations
                     b.HasKey("Name");
 
                     b.ToTable("Groups");
+                });
+
+            modelBuilder.Entity("api.Entities.Industry", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("Industries");
                 });
 
             modelBuilder.Entity("api.Entities.Message", b =>
@@ -332,6 +405,123 @@ namespace api.Data.Migrations
                     b.ToTable("Photos");
                 });
 
+            modelBuilder.Entity("api.Entities.Profession", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Industry")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name", "Industry")
+                        .IsUnique();
+
+                    b.ToTable("Professions");
+                });
+
+            modelBuilder.Entity("api.Entities.Qualification", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("Qualifications");
+                });
+
+            modelBuilder.Entity("api.Entities.Skill", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("Skill");
+                });
+
+            modelBuilder.Entity("api.Entities.UserAddress", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("AddressId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("IsMain")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AddressId");
+
+                    b.ToTable("UserAddresses");
+                });
+
+            modelBuilder.Entity("api.Entities.UserExp", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("AppUserId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Employer")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("MonthlySalaryDrawn")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Position")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("ProfessionId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("SalaryCurrency")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("SrNo")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("WorkedFrom")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("WorkedUpto")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AppUserId");
+
+                    b.ToTable("UserExperiences");
+                });
+
             modelBuilder.Entity("api.Entities.UserLike", b =>
                 {
                     b.Property<int>("SourceUserId")
@@ -345,6 +535,125 @@ namespace api.Data.Migrations
                     b.HasIndex("LikedUserId");
 
                     b.ToTable("Likes");
+                });
+
+            modelBuilder.Entity("api.Entities.UserPassport", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("AppUserId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("Ecnr")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("IsValid")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("IssuedAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("IssuedOn")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("PassportNo")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("Validity")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AppUserId");
+
+                    b.HasIndex("PassportNo")
+                        .IsUnique();
+
+                    b.ToTable("UserPassports");
+                });
+
+            modelBuilder.Entity("api.Entities.UserPhone", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("AppUserId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("IsValid")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("PhoneNo")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AppUserId");
+
+                    b.HasIndex("PhoneNo")
+                        .IsUnique();
+
+                    b.ToTable("UserPhones");
+                });
+
+            modelBuilder.Entity("api.Entities.UserProfession", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("AppUserId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Industry")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("IsMain")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("ProfessionId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AppUserId");
+
+                    b.ToTable("UserProfessions");
+                });
+
+            modelBuilder.Entity("api.Entities.UserQualification", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("AppUserId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("IsMain")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Qualification")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int?>("QualificationId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AppUserId");
+
+                    b.ToTable("UserQualifications");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -381,6 +690,15 @@ namespace api.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("api.Entities.Address", b =>
+                {
+                    b.HasOne("api.Entities.AppUser", "AppUser")
+                        .WithMany("UserAddresses")
+                        .HasForeignKey("AppUserId");
+
+                    b.Navigation("AppUser");
                 });
 
             modelBuilder.Entity("api.Entities.AppUserRole", b =>
@@ -439,6 +757,24 @@ namespace api.Data.Migrations
                     b.Navigation("AppUser");
                 });
 
+            modelBuilder.Entity("api.Entities.UserAddress", b =>
+                {
+                    b.HasOne("api.Entities.Address", "Address")
+                        .WithMany()
+                        .HasForeignKey("AddressId");
+
+                    b.Navigation("Address");
+                });
+
+            modelBuilder.Entity("api.Entities.UserExp", b =>
+                {
+                    b.HasOne("api.Entities.AppUser", null)
+                        .WithMany("UserExperiences")
+                        .HasForeignKey("AppUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("api.Entities.UserLike", b =>
                 {
                     b.HasOne("api.Entities.AppUser", "LikedUser")
@@ -458,6 +794,42 @@ namespace api.Data.Migrations
                     b.Navigation("SourceUser");
                 });
 
+            modelBuilder.Entity("api.Entities.UserPassport", b =>
+                {
+                    b.HasOne("api.Entities.AppUser", null)
+                        .WithMany("UserPassports")
+                        .HasForeignKey("AppUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("api.Entities.UserPhone", b =>
+                {
+                    b.HasOne("api.Entities.AppUser", null)
+                        .WithMany("UserPhones")
+                        .HasForeignKey("AppUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("api.Entities.UserProfession", b =>
+                {
+                    b.HasOne("api.Entities.AppUser", null)
+                        .WithMany("UserProfessions")
+                        .HasForeignKey("AppUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("api.Entities.UserQualification", b =>
+                {
+                    b.HasOne("api.Entities.AppUser", null)
+                        .WithMany("UserQualifications")
+                        .HasForeignKey("AppUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("api.Entities.AppRole", b =>
                 {
                     b.Navigation("UserRoles");
@@ -474,6 +846,18 @@ namespace api.Data.Migrations
                     b.Navigation("MessagesSent");
 
                     b.Navigation("Photos");
+
+                    b.Navigation("UserAddresses");
+
+                    b.Navigation("UserExperiences");
+
+                    b.Navigation("UserPassports");
+
+                    b.Navigation("UserPhones");
+
+                    b.Navigation("UserProfessions");
+
+                    b.Navigation("UserQualifications");
 
                     b.Navigation("UserRoles");
                 });

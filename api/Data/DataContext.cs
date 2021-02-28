@@ -15,7 +15,6 @@ namespace api.Data
     {
         public DataContext(DbContextOptions options) : base(options)
         {
-
         }
 
         public DbSet<UserLike> Likes {get; set; }
@@ -23,10 +22,38 @@ namespace api.Data
         public DbSet<Group> Groups {get; set;}
         public DbSet<Connection> Connections {get; set;}
 
+        public DbSet<Industry> Industries {get; set; }
+        public DbSet<Profession> Professions {get; set;}
+        public DbSet<Qualification> Qualifications {get; set; }
+        public DbSet<UserAddress> UserAddresses {get; set;}
+        public DbSet<UserQualification> UserQualifications {get; set;}
+        public DbSet<UserPassport> UserPassports {get; set; }
+        public DbSet<UserPhone> UserPhones {get; set;}
+        public DbSet<UserProfession> UserProfessions {get; set;}
+        public DbSet<UserExp> UserExperiences {get; set;}
+
         protected override void OnModelCreating (ModelBuilder builder)
         {
             base.OnModelCreating(builder);
 
+            builder.Entity<Industry>()
+                .HasIndex("Name").IsUnique();
+
+            builder.Entity<Qualification>()
+                .HasIndex("Name").IsUnique();
+            
+            builder.Entity<Skill>()
+                .HasIndex("Name").IsUnique();
+                                
+            builder.Entity<UserPassport>()
+                .HasIndex("PassportNo").IsUnique();
+                
+            builder.Entity<UserPhone>()
+                .HasIndex("PhoneNo").IsUnique();
+                            
+            builder.Entity<Profession>()
+                .HasIndex("Name", "Industry").IsUnique();
+            
             builder.Entity<AppUser>()
                 .HasMany(ur => ur.UserRoles)
                 .WithOne(u => u.User)

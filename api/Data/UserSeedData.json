@@ -1,5 +1,6 @@
 [
     {
+        "FirstName": "Lisa Anderson",
         "UserName": "Lisa",
         "Gender": "female",
         "DateOfBirth": "1956-07-22",
@@ -11,6 +12,22 @@
         "Interests": "Sit sit incididunt proident velit.",
         "City": "Greenbush",
         "Country": "Martinique",
+        "UserAddresses": [
+            {
+                "Add" : "Sunt esse aliqua ullamco in incididunt consequat",
+                "StreetAdd" : "Dolor anim cupidatat occaecat aliquip",
+                "City" : "Greenbush",
+                "Pin": "ND39934",
+                "State": "Marisiana",
+                "Country": "Martinique",
+                "IsMain": true
+            }
+        ],
+        "UserQualifications": [
+            {"QualificationId": 2, "IsMain": true},
+            {"QualificationId": 4, "IsMain": false},
+            {"QualificationId": 5, "IsMain": false}
+        ],
         "Photos": [
             {
                 "Url": "https://randomuser.me/api/portraits/women/54.jpg",
@@ -19,6 +36,7 @@
         ]
     },
     {
+        "FirstName": "Karen John",
         "UserName": "Karen",
         "Gender": "female",
         "DateOfBirth": "1995-10-12",
@@ -30,6 +48,22 @@
         "Interests": "Dolor aliquip velit amet aliqua minim labore sit laboris non aliquip cillum.",
         "City": "Celeryville",
         "Country": "Grenada",
+        "UserAddresses": [
+            {
+                "Add" : "Laborum dolore aliquip voluptate sunt",
+                "StreetAdd" : "Dolor aliquip velit amet aliqua minim",
+                "City" : "Celeryville",
+                "Pin": "Z3DFFFS",
+                "State": "Sanfrancisco",
+                "Country": "Grenada",
+                "IsMain": true
+            }
+        ],
+        "UserQualifications": [
+            {"QualificationId": 1, "IsMain": true},
+            {"QualificationId": 3, "IsMain": false},
+            {"QualificationId": 6, "IsMain": false}
+        ],
         "Photos": [
             {
                 "Url": "https://randomuser.me/api/portraits/women/50.jpg",
@@ -38,6 +72,7 @@
         ]
     },
     {
+        "FirstName": "Margon Jane Fonseca",
         "UserName": "Margo",
         "Gender": "female",
         "DateOfBirth": "1959-01-24",
@@ -49,6 +84,22 @@
         "Interests": "Commodo do eiusmod quis labore est non.",
         "City": "Rosewood",
         "Country": "Svalbard and Jan Mayen Islands",
+        "UserAddresses": [
+            {
+                "Add" : "Laborum dolore aliquip voluptate sunt",
+                "StreetAdd" : "Dolor aliquip velit amet aliqua minim",
+                "City" : "Rosewood",
+                "Pin": "ND231934",
+                "State": "Marisiana",
+                "Country": "Svalbard and Jan Mayen Islands",
+                "IsMain": true
+            }
+        ],
+        "UserQualifications": [
+            {"QualificationId": 3, "IsMain": true},
+            {"QualificationId": 1, "IsMain": false},
+            {"QualificationId": 2, "IsMain": false}
+        ],
         "Photos": [
             {
                 "Url": "https://randomuser.me/api/portraits/women/14.jpg",
@@ -57,6 +108,7 @@
         ]
     },
     {
+        "FirstName": "Lois Fonseca",
         "UserName": "Lois",
         "Gender": "female",
         "DateOfBirth": "1988-06-22",
@@ -68,6 +120,22 @@
         "Interests": "Duis in est laboris anim pariatur incididunt mollit laboris ea velit aliquip cillum.",
         "City": "Orviston",
         "Country": "Zimbabwe",
+        "UserAddresses": [
+            {
+                "Add" : "Laborum dolore aliquip voluptate sunt",
+                "StreetAdd" : "Dolor aliquip velit amet aliqua minim",
+                "City" : "Celeryville",
+                "Pin": "ND39934",
+                "State": "Larichiva",
+                "Country": "Zimbabwe",
+                "IsMain": true
+            }
+        ],
+        "UserQualifications": [
+            {"QualificationId": 3, "IsMain": true},
+            {"QualificationId": 4, "IsMain": false},
+            {"QualificationId": 7, "IsMain": false}
+        ],
         "Photos": [
             {
                 "Url": "https://randomuser.me/api/portraits/women/11.jpg",
@@ -76,6 +144,7 @@
         ]
     },
     {
+        "FirstName": "Ruthie Wockhardt",
         "UserName": "Ruthie",
         "Gender": "female",
         "DateOfBirth": "1956-01-12",
@@ -87,6 +156,21 @@
         "Interests": "Elit Lorem aliquip deserunt cupidatat ex aliquip ullamco.",
         "City": "Germanton",
         "Country": "Antigua and Barbuda",
+        "UserAddresses": [
+            {
+                "Add" : "Laborum dolore aliquip voluptate sunt",
+                "StreetAdd" : "Dolor aliquip velit amet aliqua minim",
+                "City" : "Celeryville",
+                "Pin": "ND39934",
+                "State": "Germanton",
+                "Country": "Antigua and Barbuda",
+                "IsMain": true
+            }
+        ],
+        "UserQualifications": [
+            {"QualificationId": 2, "IsMain": true},
+            {"QualificationId": 4, "IsMain": false}   
+        ],
         "Photos": [
             {
                 "Url": "https://randomuser.me/api/portraits/women/84.jpg",
@@ -95,6 +179,7 @@
         ]
     },
     {
+        "FirstName": "Todd Zebwenski",
         "UserName": "Todd",
         "Gender": "male",
         "DateOfBirth": "1950-02-07",
@@ -104,8 +189,22 @@
         "Introduction": "Mollit elit cillum dolore ea laboris consequat excepteur eiusmod eiusmod qui magna mollit occaecat. Sint qui ut veniam non. Est non veniam magna in consectetur ullamco eiusmod in elit aute ea ipsum aliquip. Duis nisi do dolore ad. Consectetur incididunt quis exercitation aliquip officia. Ex anim pariatur veniam fugiat aute consequat quis nisi in quis.\r\n",
         "LookingFor": "Magna ex non ullamco ipsum commodo minim cupidatat sit. Sint dolor enim amet cupidatat. Anim et ea officia ea officia veniam adipisicing tempor. Labore consequat in duis deserunt tempor aliqua. Eu incididunt id deserunt proident ullamco aliqua culpa officia anim deserunt fugiat amet voluptate qui. In id non sint sint aliqua commodo reprehenderit excepteur cillum Lorem minim.\r\n",
         "Interests": "Esse cillum deserunt fugiat deserunt irure ea esse deserunt quis exercitation velit do nisi reprehenderit.",
-        "City": "Cliff",
-        "Country": "British Indian Ocean Territory",
+        "City": "Hyderabad",
+        "Country": "India",
+        "UserAddresses": [
+            {
+                "Add" : "Laborum dolore aliquip voluptate sunt",
+                "StreetAdd" : "Dolor aliquip velit amet aliqua minim",
+                "City" : "Hyderabad",
+                "Pin": "3494989",
+                "State": "Telangana",
+                "Country": "India",
+                "IsMain": true
+            }
+        ],
+        "UserQualifications": [
+            {"QualificationId": 1, "IsMain": true}
+        ],
         "Photos": [
             {
                 "Url": "https://randomuser.me/api/portraits/men/90.jpg",
@@ -114,6 +213,7 @@
         ]
     },
     {
+        "FirstName": "Porter Fitzgerald",
         "UserName": "Porter",
         "Gender": "male",
         "DateOfBirth": "1967-04-09",
@@ -123,8 +223,22 @@
         "Introduction": "Qui adipisicing enim mollit magna fugiat. Quis laborum sit adipisicing Lorem veniam magna. Aliqua ex occaecat id duis aute excepteur quis eu eiusmod. Cillum consectetur dolore officia consequat veniam nulla qui occaecat ullamco ipsum sit incididunt aute ullamco.\r\n",
         "LookingFor": "Officia id adipisicing duis culpa aute voluptate Lorem quis aliquip qui. Cupidatat aliquip amet reprehenderit excepteur amet et est dolore est. Veniam pariatur elit non ullamco labore quis do. Ad non cillum nisi non. Non cupidatat nisi fugiat officia tempor officia sunt qui duis.\r\n",
         "Interests": "Aliquip proident pariatur excepteur incididunt irure et.",
-        "City": "Welda",
-        "Country": "Christmas Island",
+        "City": "Bangaluru",
+        "Country": "India",
+        "UserAddresses": [
+            {
+                "Add" : "Laborum dolore aliquip voluptate sunt",
+                "StreetAdd" : "Dolor aliquip velit amet aliqua minim",
+                "City" : "Bangaluru",
+                "Pin": "9848494",
+                "State": "Karnataka",
+                "Country": "Grenada",
+                "IsMain": true
+            }
+        ],
+        "UserQualifications": [
+            {"QualificationId": 3, "IsMain": true}
+        ],
         "Photos": [
             {
                 "Url": "https://randomuser.me/api/portraits/men/87.jpg",
@@ -133,6 +247,7 @@
         ]
     },
     {
+        "FirstName": "Mayo Digredinio",
         "UserName": "Mayo",
         "Gender": "male",
         "DateOfBirth": "1990-03-23",
@@ -144,6 +259,20 @@
         "Interests": "Duis consectetur proident labore velit minim irure proident incididunt officia duis.",
         "City": "Clarence",
         "Country": "Burkina Faso",
+        "UserAddresses": [
+            {
+                "Add" : "Laborum dolore aliquip voluptate sunt",
+                "StreetAdd" : "Dolor aliquip velit amet aliqua minim",
+                "City" : "Celeryville",
+                "Pin": "800045",
+                "State": "Tamil Nadu",
+                "Country": "India",
+                "IsMain": true
+            }
+        ],
+        "UserQualifications": [
+            {"QualificationId": 5, "IsMain": true}
+        ],
         "Photos": [
             {
                 "Url": "https://randomuser.me/api/portraits/men/57.jpg",
@@ -152,6 +281,7 @@
         ]
     },
     {
+        "FirstName": "Skinner Forseth",
         "UserName": "Skinner",
         "Gender": "male",
         "DateOfBirth": "1952-12-01",
@@ -163,6 +293,21 @@
         "Interests": "Pariatur qui ut commodo laboris officia.",
         "City": "Herald",
         "Country": "Poland",
+        "UserAddresses": [
+            {
+                "Add" : "Laborum dolore aliquip voluptate sunt",
+                "StreetAdd" : "Dolor aliquip velit amet aliqua minim",
+                "City" : "Chennai",
+                "Pin": "600034",
+                "State": "Maharashtra",
+                "Country": "India",
+                "IsMain": true
+            }
+        ],
+        "UserQualifications": [
+            {"QualificationId": 4, "IsMain": true},
+            {"QualificationId": 2, "IsMain": false}
+        ],
         "Photos": [
             {
                 "Url": "https://randomuser.me/api/portraits/men/11.jpg",
@@ -171,6 +316,7 @@
         ]
     },
     {
+        "FirstName": "Davis Patriacho",
         "UserName": "Davis",
         "Gender": "male",
         "DateOfBirth": "1978-03-20",
@@ -182,6 +328,22 @@
         "Interests": "Labore consectetur labore ut nulla voluptate nulla quis labore tempor dolor laborum.",
         "City": "Lupton",
         "Country": "Luxembourg",
+        "UserAddresses": [
+            {
+                "Add" : "Laborum dolore aliquip voluptate sunt",
+                "StreetAdd" : "Dolor aliquip velit amet aliqua minim",
+                "City" : "Celeryville",
+                "Pin": "ND39934",
+                "State": "Marisiana",
+                "Country": "Grenada",
+                "IsMain": true
+            }
+        ],
+        "UserQualifications": [
+            {"QualificationId": 5, "IsMain": true},
+            {"QualificationId": 2, "IsMain": false},
+            {"QualificationId": 3, "IsMain": false}
+        ],
         "Photos": [
             {
                 "Url": "https://randomuser.me/api/portraits/men/93.jpg",

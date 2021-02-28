@@ -73,7 +73,7 @@ namespace api.Controllers
 
             _mapper.Map(memberUpdateDto, user);
 
-            _unitOfWork.UserRepository.Update(user);
+            _unitOfWork.UserRepository.Update(user);        //changes state to Modified
 
             if (await _unitOfWork.Complete()) return NoContent();
 
