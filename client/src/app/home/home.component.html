@@ -2,17 +2,63 @@
     <div *ngIf="!registerMode" style="text-align: center;">
         <h1>find your match</h1>
         <p class="lead">sign in to view your matches</p>
-        <button (click)="registerToggle()" class="btn btn-primary btn-lg mr-2">Register</button>
-        <button class="btn btn-primary btn-lg">Learn more</button>
+        
+        <button (click)="registerToggle()" class="btn btn-primary mr-2">New Candidate</button>
+        <button (click)="registerCustomer()" class="btn btn-primary mr-2">New Customer</button>
+        <button (click)="registerAssociate()" class="btn btn-primary mr-2">New Associate</button>
+        <button (click)="registerTradeTesting()" class="btn btn-primary mr-2">New Trade Testing Agency</button>
+        <button (click)="registerEmployee()" class="btn btn-primary mr-2">New Employee</button>
+        
+        <button class="btn btn-primary">Learn more</button>
     </div>
 
-    <div *ngIf="registerMode" class="container">
+    <div *ngIf="registerMode===1" class="container">    <!--member-->
         <div class="row justify-content-center">
-            <div class="col-4">
+            <div>
+                <app-register
+                    (cancelRegister)="cancelRegisterMode($event)">
+                </app-register>
+            </div>
+        </div>
+    </div>
+    <!--
+    <div *ngIf="registerMode===2" class="container">    
+        <div class="row justify-content-center">
+            <div>
+                <app-register-customer
+                    (cancelRegister)="cancelRegisterMode($event)">
+                </app-register-customer>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="registerMode===3" class="container">    
+        <div class="row justify-content-center">
+            <div>
                 <app-register 
                     (cancelRegister)="cancelRegisterMode($event)">
                 </app-register>
             </div>
         </div>
     </div>
+    <div *ngIf="registerMode===4" class="container">    
+        <div class="row justify-content-center">
+            <div>
+                <app-register 
+                    (cancelRegister)="cancelRegisterMode($event)">
+                </app-register>
+            </div>
+        </div>
+    </div>
+-->
+    <div *ngIf="registerMode===5" class="container">  
+        <div class="row justify-content-center">
+            <div>
+                <app-register 
+                    (cancelRegister)="cancelRegisterMode($event)">
+                </app-register>
+            </div>
+        </div>
+    </div>
+    
+
 </div>

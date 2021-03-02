@@ -31,10 +31,23 @@ namespace api.Data
         public DbSet<UserPhone> UserPhones {get; set;}
         public DbSet<UserProfession> UserProfessions {get; set;}
         public DbSet<UserExp> UserExperiences {get; set;}
+        public DbSet<Customer> Customers {get; set;}
+        public DbSet<CustomerOfficial> CustomerOfficials {get; set;}
+        public DbSet<AgencySpecialty> AgencySpecialties {get; set;}
+        public DbSet<CustomerIndustry> CustomerIndustries {get; set;}
 
         protected override void OnModelCreating (ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+            
+            builder.Entity<Customer>()
+                .HasIndex("CustomerName", "City").IsUnique();
+
+            builder.Entity<AgencySpecialty>()
+                .HasIndex("CustomerId", "ProfessionId","IndustryId").IsUnique();
+
+            builder.Entity<CustomerIndustry>()
+                .HasIndex("CustomerId", "IndustryId").IsUnique();
 
             builder.Entity<Industry>()
                 .HasIndex("Name").IsUnique();
@@ -50,10 +63,8 @@ namespace api.Data
                 
             builder.Entity<UserPhone>()
                 .HasIndex("PhoneNo").IsUnique();
-                            
             builder.Entity<Profession>()
-                .HasIndex("Name", "Industry").IsUnique();
-            
+                .HasIndex("Name").IsUnique();
             builder.Entity<AppUser>()
                 .HasMany(ur => ur.UserRoles)
                 .WithOne(u => u.User)

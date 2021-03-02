@@ -1,6 +1,8 @@
+<h4>register a Candidate</h4>
 <div class="container" style="margin-left: 10px; width: 1400px; padding: 0px; margin-top: 0px;">
     <div class="row">
         <form [formGroup]="registerForm" (ngSubmit)="registerForm.valid && register()" autocomplete="off">
+            <input type="hidden" formControlName="userType" value="candidate" >
             <div style="display: inline-block; width: 1200px;">
                 <div class="col-4 width: 400px; form-group" style="display: inline-block;">
                     <label class="control-label" style="margin-right: 10px; font-size: small;">gender</label>
@@ -20,8 +22,7 @@
                 <div class="col-4 form-group" style="width: 400px;" style="display: inline-block;">
                     <app-text-input [formControl]='registerForm.controls["familyName"]' [label]='"Family Name"'></app-text-input>
                 </div>
-                
-                <div class="col-4 form-group" style="width: 400px;" style="display: inline-block;">
+                 <div class="col-4 form-group" style="width: 400px;" style="display: inline-block;">
                     <app-text-input [formControl]='registerForm.controls["username"]' [label]='"user name"'></app-text-input>
                 </div>
                 <div class="row col-4 form-group" style="width: 400px;" style="display: inline-block;">
@@ -42,9 +43,21 @@
                 <div class="col-4 form-group" style="width: 400px;" style="display: inline-block;">
                     <app-text-input [formControl]='registerForm.controls["confirmPassword"]' [type]='"password"' [label]='"confirm password"'></app-text-input>
                 </div>
+                <div class="col-4 form-group" style="width: 400px;" style="display: inline-block;">
+                    <app-text-input [formControl]='registerForm.controls["lookingFor"]' [label]='"Looking For"'></app-text-input>
+                </div>
+                <div class="col-4 form-group" style="width: 400px;" style="display: inline-block;">
+                    <app-text-input [formControl]='registerForm.controls["interests"]' [label]='"Interests"'></app-text-input>
+                </div>
+                <div class="col-4 form-group" style="width: 400px;" style="display: inline-block;">
+                    Referred by:  <select class="blueText" formControlName="associateId" >
+                        <option *ngFor="let agt of associates" [ngValue]="agt.id">{{agt.customerName}}</option>
+                    </select>
+                </div>
             </div>
+
             <div class="row col-10 top" style="width: 800px; margin-top: 0px; padding: 0px;">
-                <tabset style="margin-top: 0px;" class="member-tabset" #memberTabs>
+                <tabset class="member-tabset" #memberTabs>
                     <tab heading="Passports" (selectTab)="onTabActivated($event)">
                         Aadhar No: <app-text-input [formControl]='registerForm.controls["aadharNo"]' [label]='"Aadhar No"'></app-text-input>
                         <div formArrayName="userPassports">
@@ -63,27 +76,16 @@
                         </div>
                     </tab>
                     <tab heading="Profession" (selectTab)="onTabActivated($event)">
-                        <!--
-                        <ng-select [items]="professions"
-                            bindLabel="name"
-                            placeholder="Select Profession"
-                            appendTo="ng-select"
-                            dropdownPosition="relative"
-                            closeOnSelect="false"
-                            multiple="true"
-                            searchable="true"
-                            groupBy="industry"
-                            (change)="onProfChange()"
-                            formControlName="userProfessions">
-                        </ng-select>
-                    -->
                         <div formArrayName="userProfessions">
                             <p><button type="button" (click)="addUserProfession()">Add</button>
                             </p>
                             <div *ngFor="let prof of userProfessions.controls; let i=index">
                                 <div [formGroupName]="i"> {{i+1}}
-                                    <select class="blueText" formControlName="professionId" >
-                                        <option *ngFor="let prof of professionsDto" [ngValue]="prof.id">{{prof.nameWithIndustry}}</option>
+                                    Industry: <select class="blueText" formControlName="industryId" >
+                                        <option *ngFor="let ind of industries" [ngValue]="ind.id">{{ind.name}}</option>
+                                    </select>
+                                    Profession: <select class="blueText" formControlName="professionId" >
+                                        <option *ngFor="let prof of professions" [ngValue]="prof.id">{{prof.name}}</option>
                                     </select>
                                     Is Main: <input type="checkbox" value=false formControlName="isMain">
                                     <button (click)="removeUserProfession(i)">Remove</button>
@@ -156,8 +158,8 @@
                                     </div>
                                     <div class="col-6" style="display: inline-block;">
                                         Position: 
-                                        <select id="styledSelect" class="blueText" formControlName="professionId" >
-                                            <option *ngFor="let prof of professionsDto" [ngValue]="prof.id">{{prof.nameWithIndustry}}</option>
+                                        <select id="styledSelect" class="blueText" formControlName="positionId" >
+                                            <option *ngFor="let prof of professions" [ngValue]="prof.id">{{prof.name}}</option>
                                           </select>
                                     </div>
                                     <div class="col-6" style="display: inline-block;">

@@ -49,6 +49,9 @@ export class MembersService {
     params = params.append('maxAge', userParams.maxAge.toString());
     params = params.append('gender', userParams.gender);
     params = params.append('orderBy', userParams.orderBy);
+    params = params.append('userType', userParams.userType);
+    params = params.append('nameLike', userParams.nameLike);
+    params = params.append('associateId',  userParams.associateId.join(','));   //associateId is list<int>
 
     return getPaginatedResult<Member[]>(this.baseUrl + 'users', params, this.http).pipe(
       map(response => {

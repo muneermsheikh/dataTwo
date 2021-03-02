@@ -28,10 +28,14 @@ namespace api.Data.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
+                    ApplicationNo = table.Column<int>(type: "INTEGER", nullable: false),
+                    UserType = table.Column<string>(type: "TEXT", nullable: true),
                     Gender = table.Column<string>(type: "TEXT", nullable: true),
                     FirstName = table.Column<string>(type: "TEXT", nullable: true),
                     SecondName = table.Column<string>(type: "TEXT", nullable: true),
                     FamilyName = table.Column<string>(type: "TEXT", nullable: true),
+                    AssociateId = table.Column<int>(type: "INTEGER", nullable: false),
+                    CompanyName = table.Column<string>(type: "TEXT", nullable: true),
                     KnownAs = table.Column<string>(type: "TEXT", nullable: true),
                     DateOfBirth = table.Column<DateTime>(type: "TEXT", nullable: false),
                     AadharNo = table.Column<string>(type: "TEXT", nullable: true),
@@ -42,6 +46,7 @@ namespace api.Data.Migrations
                     Introduction = table.Column<string>(type: "TEXT", nullable: true),
                     LookingFor = table.Column<string>(type: "TEXT", nullable: true),
                     Interests = table.Column<string>(type: "TEXT", nullable: true),
+                    Status = table.Column<string>(type: "TEXT", nullable: true),
                     UserName = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
@@ -60,6 +65,29 @@ namespace api.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Customers",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    CustomerName = table.Column<string>(type: "TEXT", nullable: true),
+                    KnownAs = table.Column<string>(type: "TEXT", nullable: true),
+                    CustomerType = table.Column<string>(type: "TEXT", nullable: true),
+                    Add = table.Column<string>(type: "TEXT", nullable: true),
+                    Add2 = table.Column<string>(type: "TEXT", nullable: true),
+                    City = table.Column<string>(type: "TEXT", nullable: true),
+                    Pin = table.Column<string>(type: "TEXT", nullable: true),
+                    State = table.Column<string>(type: "TEXT", nullable: true),
+                    Country = table.Column<string>(type: "TEXT", nullable: true),
+                    IntroducedBy = table.Column<string>(type: "TEXT", nullable: true),
+                    IsActive = table.Column<bool>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Customers", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -92,8 +120,7 @@ namespace api.Data.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Name = table.Column<string>(type: "TEXT", nullable: false),
-                    Industry = table.Column<string>(type: "TEXT", nullable: false)
+                    Name = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -397,6 +424,7 @@ namespace api.Data.Migrations
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     PhoneNo = table.Column<string>(type: "TEXT", nullable: false),
+                    IsMain = table.Column<bool>(type: "INTEGER", nullable: false),
                     IsValid = table.Column<bool>(type: "INTEGER", nullable: false),
                     AppUserId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
@@ -417,9 +445,10 @@ namespace api.Data.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Name = table.Column<string>(type: "TEXT", nullable: false),
                     ProfessionId = table.Column<int>(type: "INTEGER", nullable: false),
-                    Industry = table.Column<string>(type: "TEXT", nullable: false),
+                    IndustryId = table.Column<int>(type: "INTEGER", nullable: false),
+                    ProfessionName = table.Column<string>(type: "TEXT", nullable: true),
+                    IndustryName = table.Column<string>(type: "TEXT", nullable: true),
                     IsMain = table.Column<bool>(type: "INTEGER", nullable: false),
                     AppUserId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
@@ -452,6 +481,74 @@ namespace api.Data.Migrations
                         name: "FK_UserQualifications_AspNetUsers_AppUserId",
                         column: x => x.AppUserId,
                         principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AgencySpecialties",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    CustomerId = table.Column<int>(type: "INTEGER", nullable: false),
+                    ProfessionId = table.Column<int>(type: "INTEGER", nullable: false),
+                    IndustryId = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AgencySpecialties", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AgencySpecialties_Customers_CustomerId",
+                        column: x => x.CustomerId,
+                        principalTable: "Customers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CustomerIndustries",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    CustomerId = table.Column<int>(type: "INTEGER", nullable: false),
+                    IndustryId = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CustomerIndustries", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_CustomerIndustries_Customers_CustomerId",
+                        column: x => x.CustomerId,
+                        principalTable: "Customers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CustomerOfficials",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    CustomerId = table.Column<int>(type: "INTEGER", nullable: false),
+                    Gender = table.Column<string>(type: "TEXT", nullable: true),
+                    Title = table.Column<string>(type: "TEXT", nullable: true),
+                    OfficialName = table.Column<string>(type: "TEXT", nullable: true),
+                    Designation = table.Column<string>(type: "TEXT", nullable: true),
+                    Mobile = table.Column<string>(type: "TEXT", nullable: true),
+                    PhoneNo = table.Column<string>(type: "TEXT", nullable: true),
+                    Email = table.Column<string>(type: "TEXT", nullable: true),
+                    IsValid = table.Column<bool>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CustomerOfficials", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_CustomerOfficials_Customers_CustomerId",
+                        column: x => x.CustomerId,
+                        principalTable: "Customers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -501,6 +598,12 @@ namespace api.Data.Migrations
                 column: "AppUserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_AgencySpecialties_CustomerId_ProfessionId_IndustryId",
+                table: "AgencySpecialties",
+                columns: new[] { "CustomerId", "ProfessionId", "IndustryId" },
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
                 column: "RoleId");
@@ -543,6 +646,23 @@ namespace api.Data.Migrations
                 column: "GroupName");
 
             migrationBuilder.CreateIndex(
+                name: "IX_CustomerIndustries_CustomerId_IndustryId",
+                table: "CustomerIndustries",
+                columns: new[] { "CustomerId", "IndustryId" },
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CustomerOfficials_CustomerId",
+                table: "CustomerOfficials",
+                column: "CustomerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Customers_CustomerName_City",
+                table: "Customers",
+                columns: new[] { "CustomerName", "City" },
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Industries_Name",
                 table: "Industries",
                 column: "Name",
@@ -569,9 +689,9 @@ namespace api.Data.Migrations
                 column: "AppUserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Professions_Name_Industry",
+                name: "IX_Professions_Name",
                 table: "Professions",
-                columns: new[] { "Name", "Industry" },
+                column: "Name",
                 unique: true);
 
             migrationBuilder.CreateIndex(
@@ -632,6 +752,9 @@ namespace api.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "AgencySpecialties");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
             migrationBuilder.DropTable(
@@ -648,6 +771,12 @@ namespace api.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Connections");
+
+            migrationBuilder.DropTable(
+                name: "CustomerIndustries");
+
+            migrationBuilder.DropTable(
+                name: "CustomerOfficials");
 
             migrationBuilder.DropTable(
                 name: "Industries");
@@ -693,6 +822,9 @@ namespace api.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Groups");
+
+            migrationBuilder.DropTable(
+                name: "Customers");
 
             migrationBuilder.DropTable(
                 name: "Address");

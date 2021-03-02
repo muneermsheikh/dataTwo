@@ -6,7 +6,7 @@ namespace api.Entities
     {
         public int Id { get; set; }
         public int SrNo { get; set; }
-        public int ProfessionId { get; set; }
+        public int PositionId { get; set; }
         public string Employer { get; set; }
         public string Position { get; set; }
         public string SalaryCurrency { get; set; }

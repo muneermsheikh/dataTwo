@@ -10,14 +10,16 @@ namespace api.DTOs
     //byepassed: created, LastACtive, photos, ikedUsers, likedByUsers
         // message sent, message recd
         
-    //from IdentityDB
+    //from IdentityDB 
+        [Required, MinLength(5), MaxLength(20)] public string UserType {get; set;}
         [Required, MaxLength(15), MinLength(4)] public string Username { get; set; }
         [Required, MinLength(8), MaxLength(15)]public string Password { get; set; }
     // new fields    
-        [Required, StringLength(1)] public string Gender { get; set; }
-        [Required, MaxLength(20), MinLength(5)] public string FirstName {get; set;}
+        [StringLength(1)] public string Gender { get; set; }
+        [MaxLength(20), MinLength(5)] public string FirstName {get; set;}
         public string SecondName {get; set;}
         public string FamilyName {get; set;}
+        [MaxLength(50), MinLength(10)]public string CompanyName { get; set; }
         [Required, MaxLength(10), MinLength(4)] public string KnownAs { get; set; }
         [Required] public DateTime DateOfBirth { get; set; }
         [StringLength(12)] public string AadharNo {get; set;}

@@ -9,7 +9,7 @@ using api.Data;
 namespace api.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20210228210310_InitialCreate")]
+    [Migration("20210302015441_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -145,6 +145,29 @@ namespace api.Data.Migrations
                     b.ToTable("Address");
                 });
 
+            modelBuilder.Entity("api.Entities.AgencySpecialty", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("CustomerId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("IndustryId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("ProfessionId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CustomerId", "ProfessionId", "IndustryId")
+                        .IsUnique();
+
+                    b.ToTable("AgencySpecialties");
+                });
+
             modelBuilder.Entity("api.Entities.AppRole", b =>
                 {
                     b.Property<int>("Id")
@@ -184,7 +207,16 @@ namespace api.Data.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("ApplicationNo")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("AssociateId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("City")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("CompanyName")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("ConcurrencyStamp")
@@ -260,11 +292,17 @@ namespace api.Data.Migrations
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("Status")
+                        .HasColumnType("TEXT");
+
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("UserType")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -310,6 +348,113 @@ namespace api.Data.Migrations
                     b.HasIndex("GroupName");
 
                     b.ToTable("Connections");
+                });
+
+            modelBuilder.Entity("api.Entities.Customer", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Add")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Add2")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("City")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Country")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("CustomerName")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("CustomerType")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("IntroducedBy")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("KnownAs")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Pin")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("State")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CustomerName", "City")
+                        .IsUnique();
+
+                    b.ToTable("Customers");
+                });
+
+            modelBuilder.Entity("api.Entities.CustomerIndustry", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("CustomerId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("IndustryId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CustomerId", "IndustryId")
+                        .IsUnique();
+
+                    b.ToTable("CustomerIndustries");
+                });
+
+            modelBuilder.Entity("api.Entities.CustomerOfficial", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("CustomerId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Designation")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Gender")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("IsValid")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Mobile")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("OfficialName")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("PhoneNo")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CustomerId");
+
+                    b.ToTable("CustomerOfficials");
                 });
 
             modelBuilder.Entity("api.Entities.Group", b =>
@@ -413,17 +558,13 @@ namespace api.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Industry")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Name", "Industry")
+                    b.HasIndex("Name")
                         .IsUnique();
 
                     b.ToTable("Professions");
@@ -586,6 +727,9 @@ namespace api.Data.Migrations
                     b.Property<int>("AppUserId")
                         .HasColumnType("INTEGER");
 
+                    b.Property<bool>("IsMain")
+                        .HasColumnType("INTEGER");
+
                     b.Property<bool>("IsValid")
                         .HasColumnType("INTEGER");
 
@@ -612,19 +756,20 @@ namespace api.Data.Migrations
                     b.Property<int>("AppUserId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Industry")
-                        .IsRequired()
+                    b.Property<int>("IndustryId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("IndustryName")
                         .HasColumnType("TEXT");
 
                     b.Property<bool>("IsMain")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
                     b.Property<int>("ProfessionId")
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("ProfessionName")
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
@@ -703,6 +848,17 @@ namespace api.Data.Migrations
                     b.Navigation("AppUser");
                 });
 
+            modelBuilder.Entity("api.Entities.AgencySpecialty", b =>
+                {
+                    b.HasOne("api.Entities.Customer", "Customer")
+                        .WithMany("AgencySpecialties")
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Customer");
+                });
+
             modelBuilder.Entity("api.Entities.AppUserRole", b =>
                 {
                     b.HasOne("api.Entities.AppRole", "Role")
@@ -727,6 +883,26 @@ namespace api.Data.Migrations
                     b.HasOne("api.Entities.Group", null)
                         .WithMany("Connections")
                         .HasForeignKey("GroupName");
+                });
+
+            modelBuilder.Entity("api.Entities.CustomerIndustry", b =>
+                {
+                    b.HasOne("api.Entities.Customer", null)
+                        .WithMany("CustomerIndustries")
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("api.Entities.CustomerOfficial", b =>
+                {
+                    b.HasOne("api.Entities.Customer", "Customer")
+                        .WithMany("CustomerOfficials")
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Customer");
                 });
 
             modelBuilder.Entity("api.Entities.Message", b =>
@@ -862,6 +1038,15 @@ namespace api.Data.Migrations
                     b.Navigation("UserQualifications");
 
                     b.Navigation("UserRoles");
+                });
+
+            modelBuilder.Entity("api.Entities.Customer", b =>
+                {
+                    b.Navigation("AgencySpecialties");
+
+                    b.Navigation("CustomerIndustries");
+
+                    b.Navigation("CustomerOfficials");
                 });
 
             modelBuilder.Entity("api.Entities.Group", b =>

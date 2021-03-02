@@ -1,14 +1,19 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Console } from 'console';
 import { TabDirective, TabsetComponent } from 'ngx-bootstrap/tabs';
 import { ToastrService } from 'ngx-toastr';
+import { Customer } from '../_models/customer';
+import { Industry } from '../_models/industry';
+import { Member } from '../_models/member';
 import { Profession } from '../_models/profession';
 import { ProfessionDto } from '../_models/professionDto';
+import { UserParams } from '../_models/userParams';
 import { Qualification } from '../_models/userQualification';
 import { AccountService } from '../_services/account.service';
 import { MastersService } from '../_services/masters.service';
+import { MembersService } from '../_services/members.service';
 
 
 @Component({
@@ -17,79 +22,95 @@ import { MastersService } from '../_services/masters.service';
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
-  
   @ViewChild('memberTabs', {static: true}) memberTabs: TabsetComponent;
   @Output() cancelRegister = new EventEmitter();
   activeTab: TabDirective;
-
+  
   registerForm: FormGroup;
   maxDate: Date;
   validationErrors: string[]=[];
   profession: Profession;
+  industries: Industry[]=[];
   professions: Profession[]=[];
-  qualifications: Qualification[];
-  professionsDto: ProfessionDto[]=[];  
+  qualifications: Qualification[]=[];
+  userParams: UserParams;
+
+  associates: Customer[];
 
   constructor(private accountService: AccountService, 
-      private mastersService: MastersService, 
-      private toastService: ToastrService,
+      private mastersService: MastersService,
       private fb: FormBuilder, private router: Router) { }
 
   ngOnInit(): void {
+    // this.userType = this.route.snapshot.paramMap.get('usertype');
     this.initializeForm();
     this.maxDate = new Date;
     this.maxDate.setFullYear(this.maxDate.getFullYear()-18);  //will not set date before 18 years
   }
 
-  initializeForm() {
-    //professions
-    this.mastersService.getProfessions().subscribe((response: Profession[]) => {
-      this.professions = response;
-    })
-    //professionDto
-    this.mastersService.getProfessionsDto().subscribe((response: ProfessionDto[]) => {
-      this.professionsDto = response;
-    })
-    //qualifications
-    this.mastersService.getQualifications().subscribe((response: Qualification[]) => {
-      this.qualifications = response;
-    })
-
-    this.registerForm = this.fb.group({
-      userPhones: this.fb.array([]),
-      userAddresses: this.fb.array([]),
-      userQualifications: this.fb.array([]),
-      userPassports: this.fb.array([]),
-      userExperiences: this.fb.array([]),
-      userProfessions: this.fb.array([]),
-      aadharNo: ['123456789012', [Validators.minLength(12), Validators.maxLength(12)]],
-      gender: ['male'],
-      firstName: ['Subhash', [Validators.required, Validators.minLength(5), Validators.maxLength(20)]],
-      secondName: 'Rajaram',
-      familyName: 'Kukarni',
-      username: ['subhash', [Validators.required, Validators.minLength(4), Validators.maxLength(15)]],
-      knownAs: ['subhash', [Validators.required, Validators.minLength(4), Validators.maxLength(10)]],
-      dateOfBirth: ['11 April 1985', Validators.required],
-      city: ['Mumbai', Validators.required],
-      country: ['India', Validators.required],
-      userRole: 'candidate',
-      password: ['Pa$$w0rd', [Validators.required, Validators.minLength(8), Validators.maxLength(15)]],
-      confirmPassword: ['Pa$$w0rd',[Validators.required, this.matchValues('password')]]
-    })
-    this.registerForm.controls.password.valueChanges.subscribe(() => {
-      this.registerForm.controls.confirmPassword.updateValueAndValidity();
-    })
-  }
+  initializeForm() 
+  {
+      //professions
+      this.mastersService.getProfessions().subscribe((response: Profession[]) => {
+        this.professions = response;
+      })
+      //industries
+      this.mastersService.getIndustries().subscribe((response: Industry[]) => {
+        this.industries = response;
+      })
+      //qualifications
+      this.mastersService.getQualifications().subscribe((response: Qualification[]) => {
+        this.qualifications = response;
+      })
+      //get Associates:
+      
+      this.mastersService.getAssociateIdAndNamesWithoutPaging('associate').subscribe((response: Customer[]) => {
+        console.log(response);
+        this.associates = response;
+      })
+    
+      this.registerForm = this.fb.group({
+        userPhones: this.fb.array([]),
+        userAddresses: this.fb.array([]),
+        userQualifications: this.fb.array([]),
+        userPassports: this.fb.array([]),
+        userExperiences: this.fb.array([]),
+        userProfessions: this.fb.array([]),
+        userType: 'candidate',
+        associateId: 0,
+        lookingFor:'',
+        interests:'',
+        aadharNo: ['123456789012', [Validators.minLength(12), Validators.maxLength(12)]],
+        gender: ['male'],
+        firstName: ['Subhash', [Validators.required, Validators.minLength(5), Validators.maxLength(20)]],
+        secondName: 'Rajaram',
+        familyName: 'Kukarni',
+        username: ['subhash', [Validators.required, Validators.minLength(4), Validators.maxLength(15)]],
+        knownAs: ['subhash', [Validators.required, Validators.minLength(4), Validators.maxLength(10)]],
+        dateOfBirth: ['11 April 1985', Validators.required],
+        city: ['Mumbai', Validators.required],
+        country: ['India', Validators.required],
+        userRole: 'candidate',
+        password: ['Pa$$w0rd', [Validators.required, Validators.minLength(8), Validators.maxLength(15)]],
+        confirmPassword: ['Pa$$w0rd',[Validators.required, this.matchValues('password')]]
+      })
+      this.registerForm.controls.password.valueChanges.subscribe(() => {
+        this.registerForm.controls.confirmPassword.updateValueAndValidity();
+      })
+      this.registerForm.controls.aadharNo.valueChanges.subscribe(() => {
+        this.registerForm.controls.passportNo.updateValueAndValidity();
+      })
+  } 
 
 //userProfessions
   get userProfessions(): FormArray {
     return this.registerForm.get("userProfessions") as FormArray
   }
-
   newUserProfession(): FormGroup {
     return this.fb.group({
       //id: '',
       professionId: '',
+      industryId:'',
       isMain: false,
     })
   }
@@ -201,7 +222,7 @@ export class RegisterComponent implements OnInit {
   newUserExp(): FormGroup {
     return this.fb.group({
       srNo: [1, [Validators.min(1), Validators.max(10), Validators.required]],
-      professionId: [4, Validators.required],
+      positionId: [4, Validators.required],
       employer: ['Reliance infocom',Validators.required],
       salaryCurrency: ['INR',[Validators.required, Validators.minLength(2), Validators.maxLength(3)]],
       monthlySalaryDrawn: [25000,[Validators.required, Validators.min(10), Validators.max(10000000)]],

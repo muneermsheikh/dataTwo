@@ -8,6 +8,8 @@ namespace api.DTOs
         [Required]
         public int ProfessionId { get; set; }
         [Required]
+        public int IndustryId { get; set; }
+        [Required]
         public bool IsMain { get; set; }
     }
 }

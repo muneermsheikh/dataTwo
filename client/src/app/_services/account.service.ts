@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { ReplaySubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { Customer } from '../_models/customer';
 import { User } from '../_models/user';
 import { PresenceService } from './presence.service';
 
@@ -31,7 +32,6 @@ export class AccountService {
   }
   
   register(model: any) {
-    console.log('registering with api');
     return this.http.post(this.baseUrl + 'account/register', model).pipe(
       map((user: User) => {
         if (user) {
@@ -49,6 +49,17 @@ export class AccountService {
     Array.isArray(roles) ? user.roles = roles : user.roles.push(roles);
     localStorage.setItem('user', JSON.stringify(user));
     this.currentUserSource.next(user);
+  }
+
+  registerCustomer(model: any) {
+    return this.http.post(this.baseUrl + 'account/registercustomer', model).pipe(
+      map((response: Customer) => {
+        if (response) {
+          //this.setCurrentUser(user);
+          //this.presence.createHubConnection(user);
+        }
+      })
+    )
   }
 
   logout() {

@@ -1,0 +1,115 @@
+<div class="container">
+    <div class="row">
+        <form [formGroup]="registerForm" (ngSubmit)="registerForm.valid && register()" autocomplete="off">
+            <div class="col-4">
+                <app-text-input [formControl]='registerForm.controls["customerType"]' 
+                 [label]='"Type"'></app-text-input>
+            </div>
+            <div class="col-4">
+                <app-text-input [formControl]='registerForm.controls["companyName"]' [label]='"Company Name"'></app-text-input>
+            </div>
+            <div class="col-4">
+                <app-text-input [formControl]='registerForm.controls["knownAs"]' [label]='"Known As"'></app-text-input>
+            </div>
+            <div>
+                <tabset style="margin-top: 0px;" class="member-tabset" #memberTabs>
+                    <tab heading="Officials" (selectTab)="onTabActivated($event)">
+                        <div formArrayName="customerOfficials">
+                            <p><button type="button" (click)="addCustomerOfficial()">Add</button></p>
+                            <div *ngFor="let off of customerOfficials.controls; let i=index">
+                                <div [formGroupName]="i"> {{i+1}}
+                                    <div class="col-4">
+                                        <app-text-input [formControl]='registerForm.controls["gender"]' [label]='"Gender"'></app-text-input>
+                                    </div>
+                                    <div class="col-4">
+                                        <app-text-input [formControl]='registerForm.controls["officialName"]' [label]='"Official Name"'></app-text-input>
+                                    </div>
+                                    <div class="col-4">
+                                        <app-text-input [formControl]='registerForm.controls["designation"]' [label]='"Designation"'></app-text-input>
+                                    </div>
+                                    <div class="col-4">
+                                        <app-text-input [formControl]='registerForm.controls["phoneNo"]' [label]='"Phone"'></app-text-input>
+                                    </div>
+                                    <div class="col-4">
+                                        <app-text-input [formControl]='registerForm.controls["mobile"]' [label]='"Mobile"'></app-text-input>
+                                    </div>
+                                    <div class="col-4">
+                                        <app-text-input [formControl]='registerForm.controls["email"]' [label]='"Email"'></app-text-input>
+                                    </div>
+                                    <div class="col-4">
+                                        <app-text-input [formControl]='registerForm.controls["isValid"]' [label]='"Is Valid"'></app-text-input>
+                                    </div>
+                                </div>
+                                <button (click)="removeCustomerOfficial(i)">Remove</button>
+                            </div>
+                        </div>
+                    </tab>
+                    <tab heading="Industries" *ngIf='customerType==="customer"' (selectTab)="onTabActivated($event)">
+                        <div formArrayName="customerIndustries">
+                            <p><button type="button" (click)="addCustomerIndustry()">Add</button></p>
+                            <div *ngFor="let ind of customerIndustries.controls; let i=index">
+                                <div [formGroupName]="i"> {{i+1}}
+                                    industry: <select class="blueText" formControlName="industryId" >
+                                        <option *ngFor="let ind of industries" [ngValue]="ind.id">{{ind.name}}</option>
+                                    </select>
+                                </div>
+                                <button (click)="removeCustomerIndustry(i)">Remove</button>
+                            </div>
+                        </div>
+                    </tab>
+                    <tab heading="Agency Specialties" *ngIf='customerType==="associate"' (selectTab)="onTabActivated($event)">
+                        <div formArrayName="agencySpecialties">
+                            <p><button type="button" (click)="addAgencySpecialty()">Add</button></p>
+                            <div *ngFor="let sp of agencySpecialties.controls; let i=index">
+                                <div [formGroupName]="i"> {{i+1}}
+                                    Profession: <select class="blueText" formControlName="professionId" >
+                                        <option *ngFor="let prof of professions" [ngValue]="prof.id">{{prof.name}}</option>
+                                    </select>
+                                    Indsustry: <select class="blueText" formControlName="industryId" >
+                                        <option *ngFor="let ind of industries" [ngValue]="ind.id">{{ind.name}}</option>
+                                    </select>
+                                </div>
+                                <button (click)="removeAgencySpecialty(i)">Remove</button>
+                            </div>
+                        </div>
+                    </tab>
+                    <tab heading="Address" (selectTab)="onTabActivated($event)">
+                        <div class="col-4">
+                            <app-text-input [formControl]='registerForm.controls["add"]' [label]='"Address"'></app-text-input>
+                        </div>
+                        <div class="col-4">
+                            <app-text-input [formControl]='registerForm.controls["add1"]' [label]='"Location"'></app-text-input>
+                        </div>
+                        <div class="col-4">
+                            <app-text-input [formControl]='registerForm.controls["city"]' [label]='"City"'></app-text-input>
+                        </div>
+                        <div class="col-4">
+                            <app-text-input [formControl]='registerForm.controls["pin"]' [label]='"PIN"'></app-text-input>
+                        </div>
+                        <div class="col-4">
+                            <app-text-input [formControl]='registerForm.controls["state"]' [label]='"State"'></app-text-input>
+                        </div>
+                        <div class="col-4">
+                            <app-text-input [formControl]='registerForm.controls["country"]' [label]='"Country"'></app-text-input>
+                        </div>
+                    </tab>
+                </tabset>
+            </div>
+             <div class="row" *ngIf="validationErrors.length > 0">
+                <ul class="text-danger">
+                    <li *ngFor="let error of validationErrors">
+                        {{error}}
+                    </li>
+                </ul>
+            </div>
+            <div class="form-group text-center col-12">
+                <button [disabled]="!registerForm.valid" class="btn btn-success mr-2" type="submit">Register</button>
+                <button class="btn btn-default mr-2" type="button" (click)="cancel()">Cancel</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<p style="font-size: smaller;">values: {{registerForm.value | json}}</p>
+<p>status: {{registerForm.status | json}}</p>
+

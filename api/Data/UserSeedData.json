@@ -1,5 +1,13 @@
 [
     {
+        "UserType": "candidate",
+        "AadharNo": "123451234512",
+        "UserProfessions": [
+            {"ProfessionId": 2, "IndustryId": 2, "IsMain": true}
+        ],
+        "UserPassports": [
+            {"PassportNo": "A2345235", "IssuedOn": "2010-08-22", "Validity": "2020-01-01", "IsValid": true}
+        ],
         "FirstName": "Lisa Anderson",
         "UserName": "Lisa",
         "Gender": "female",
@@ -36,6 +44,14 @@
         ]
     },
     {
+        "UserType": "candidate",
+        "AadharNo": "123941234512",
+        "UserProfessions": [
+            {"ProfessionId": 3, "IndustryId": 3, "IsMain": true}
+        ],
+        "UserPassports": [
+            {"PassportNo": "A2341231", "IssuedOn": "2020-08-22", "Validity": "2021-01-01", "IsValid": true}
+        ],
         "FirstName": "Karen John",
         "UserName": "Karen",
         "Gender": "female",
@@ -72,6 +88,14 @@
         ]
     },
     {
+        "UserType": "candidate",
+        "AadharNo": "123400034512",
+        "UserProfessions": [
+            {"ProfessionId": 4, "IndustryId": 3, "IsMain": true}
+        ],
+        "UserPassports": [
+            {"PassportNo": "A11145232", "IssuedOn": "2011-08-22", "Validity": "2020-01-01", "IsValid": true}
+        ],
         "FirstName": "Margon Jane Fonseca",
         "UserName": "Margo",
         "Gender": "female",
@@ -108,6 +132,14 @@
         ]
     },
     {
+        "UserType": "candidate",
+        "AadharNo": "123231204512",
+        "UserProfessions": [
+            {"ProfessionId": 4, "IndustryId": 1, "IsMain": true}
+        ],
+        "UserPassports": [
+            {"PassportNo": "A2123433", "IssuedOn": "2012-08-22", "Validity": "2020-01-01", "IsValid": true}
+        ],
         "FirstName": "Lois Fonseca",
         "UserName": "Lois",
         "Gender": "female",
@@ -144,6 +176,14 @@
         ]
     },
     {
+        "UserType": "candidate",
+        "AadharNo": "123450321512",
+        "UserProfessions": [
+            {"ProfessionId": 4, "IndustryId": 2, "IsMain": true}
+        ],
+        "UserPassports": [
+            {"PassportNo": "A0945234", "IssuedOn": "2011-01-22", "Validity": "2020-01-01", "IsValid": true}
+        ],
         "FirstName": "Ruthie Wockhardt",
         "UserName": "Ruthie",
         "Gender": "female",
@@ -179,6 +219,14 @@
         ]
     },
     {
+        "UserType": "candidate",
+        "AadharNo": "123404954512",
+        "UserProfessions": [
+            {"ProfessionId": 5, "IndustryId": 3, "IsMain": true}
+        ],
+        "UserPassports": [
+            {"PassportNo": "U2340035", "IssuedOn": "2010-06-27", "Validity": "2020-01-01", "IsValid": true}
+        ],
         "FirstName": "Todd Zebwenski",
         "UserName": "Todd",
         "Gender": "male",
@@ -213,6 +261,14 @@
         ]
     },
     {
+        "UserType": "candidate",
+        "AadharNo": "123409090512",
+        "UserProfessions": [
+            {"ProfessionId": 5, "IndustryId": 3, "IsMain": true}
+        ],
+        "UserPassports": [
+            {"PassportNo": "D1141236", "IssuedOn": "2017-08-25", "Validity": "2020-01-01", "IsValid": true}
+        ],
         "FirstName": "Porter Fitzgerald",
         "UserName": "Porter",
         "Gender": "male",
@@ -247,6 +303,14 @@
         ]
     },
     {
+        "UserType": "candidate",
+        "AadharNo": "123450987612",
+        "UserProfessions": [
+            {"ProfessionId": 6, "IndustryId": 3, "IsMain": true}
+        ],
+        "UserPassports": [
+            {"PassportNo": "B0495237", "IssuedOn": "2015-11-30", "Validity": "2020-01-01", "IsValid": true}
+        ],
         "FirstName": "Mayo Digredinio",
         "UserName": "Mayo",
         "Gender": "male",
@@ -281,6 +345,14 @@
         ]
     },
     {
+        "UserType": "candidate",
+        "AadharNo": "123451098322",
+        "UserProfessions": [
+            {"ProfessionId": 4, "IndustryId": 4, "IsMain": true}
+        ],
+        "UserPassports": [
+            {"PassportNo": "v04955238", "IssuedOn": "2016-10-22", "Validity": "2020-01-01", "IsValid": true}
+        ],
         "FirstName": "Skinner Forseth",
         "UserName": "Skinner",
         "Gender": "male",
@@ -316,6 +388,14 @@
         ]
     },
     {
+        "UserType": "candidate",
+        "AadharNo": "123123474512",
+        "UserProfessions": [
+            {"ProfessionId": 5, "IndustryId": 3, "IsMain": true}
+        ],
+        "UserPassports": [
+            {"PassportNo": "Z2403009", "IssuedOn": "2014-04-23", "Validity": "2020-01-01", "IsValid": true}
+        ],
         "FirstName": "Davis Patriacho",
         "UserName": "Davis",
         "Gender": "male",

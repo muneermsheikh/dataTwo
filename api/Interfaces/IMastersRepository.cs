@@ -8,16 +8,25 @@ namespace api.Interfaces
 {
     public interface IMastersRepository
     {
+     //customers
+         Task<ICollection<Customer>> GetCustomers(string customerType);
+         Task<Customer> GetCustomerByNameAsync(string customeName, string customerType);
+         Task<bool> CustomerExistsByNameCityTypeAsync(string cutomerName, string cityName, string customerType);
+         Task<Customer> GetCustomerByIdAsync(int Id);
+         Task<bool> CustomerExistsByIdAsync(int Id);
+         void AddCustomer(Customer customer);
+         void EditCustomer(Customer customer);
+         void DeleteCustomer (Customer customer);
+
+     //professions
          Task<ICollection<Profession>> GetProfessions();
          Task<Profession> GetProfession(int Id);
-         Task<bool> ProfessionExistsByName(string professionName, string industryName);
-         Task<Profession> GetProfessionByName(string professionName, string industryName);
+         Task<bool> ProfessionExistsByName(string professionName);
+         Task<Profession> GetProfessionByName(string professionName);
          Task<bool> ProfessionExistsById(int Id);
-         void AddProfession(string ProfessionName, string IndustryName);
+         void AddProfession(string ProfessionName);
          void EditProfession(Profession profession);
          void DeleteProfession (Profession profession);
-         Task<ICollection<Profession>> GetProfessionsOfAnIndustry(string industryName);
-         Task<ICollection<Profession>> GetProfessionsOfLikeIndustry (string industryName);
 
     // Industry
          Task<ICollection<Industry>> GetIndustries();

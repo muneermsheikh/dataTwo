@@ -10,6 +10,7 @@ import { MemberDetailComponent } from './members/member-detail/member-detail.com
 import { MemberEditComponent } from './members/member-edit/member-edit.component';
 import { MemberListComponent } from './members/member-list/member-list.component';
 import { MessagesComponent } from './messages/messages.component';
+import { RegisterCustomerComponent } from './register-customer/register-customer.component';
 import { AdminGuard } from './_guards/admin.guard';
 import { AuthGuard } from './_guards/auth.guard';
 import { PreventUnsavedChangesGuard } from './_guards/prevent-unsaved-changes.guard';
@@ -23,6 +24,8 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     children: [
       {path: 'members', component: MemberListComponent, canActivate: [AuthGuard]},
+      {path: 'customerregister/:usertype', component: RegisterCustomerComponent, canActivate: [AuthGuard]},
+      {path: 'associateregister/:usertype', component: RegisterCustomerComponent, canActivate: [AuthGuard]},
       {path: 'members/:username', component: MemberDetailComponent, resolve: {member: MemberDetailedResolver} },
       //{path: 'members/:username', component: MemberDetailComponent},
       {path: 'member/edit', component: MemberEditComponent, canDeactivate: [PreventUnsavedChangesGuard] },
@@ -42,3 +45,4 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
+

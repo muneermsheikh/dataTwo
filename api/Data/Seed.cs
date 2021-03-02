@@ -14,7 +14,7 @@ namespace api.Data
             RoleManager<AppRole> roleManager, DataContext context)
         {
             if (await userManager.Users.AnyAsync()) return;
-
+//industry
             var indData = await System.IO.File.ReadAllTextAsync("Data/IndustrySeedData.json");
             var inds = JsonSerializer.Deserialize<List<Industry>>(indData);
             if (inds != null) 
@@ -22,7 +22,7 @@ namespace api.Data
                 foreach(var ind in inds)
                 { context.Industries.Add(ind); }
             }
-
+//profession
             var profData = await System.IO.File.ReadAllTextAsync("Data/CategorySeedData.json");
             var profs = JsonSerializer.Deserialize<List<Profession>>(profData);
             if (profs != null) 
@@ -30,7 +30,7 @@ namespace api.Data
                 foreach(var prof in profs)
                 {context.Professions.Add(prof);}
             }
-            
+//qualification            
             var qData = await System.IO.File.ReadAllTextAsync("Data/QualificationSeedData.json");
             var qs = JsonSerializer.Deserialize<List<Qualification>>(qData);
             if (qs != null) 
@@ -38,7 +38,15 @@ namespace api.Data
                 foreach(var q in qs)
                 { context.Qualifications.Add(q); }
             }
-
+//customer
+            var custData = await System.IO.File.ReadAllTextAsync("Data/CustomerSeedData.json");
+            var cust = JsonSerializer.Deserialize<List<Customer>>(custData);
+            if (cust != null) 
+            {
+                foreach(var c in cust)
+                { context.Customers.Add(c); }
+            }
+//user
             var userData = await System.IO.File.ReadAllTextAsync("Data/UserSeedData.json");
             var users = JsonSerializer.Deserialize<List<AppUser>>(userData);
             if (users != null) 

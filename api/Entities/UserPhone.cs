@@ -8,6 +8,7 @@ namespace api.Entities
         [Required]
         public string PhoneNo { get; set; }
         [Required]
+        public bool IsMain {get; set;}
         public bool IsValid { get; set; }=true;
 
         public int AppUserId { get; set; }

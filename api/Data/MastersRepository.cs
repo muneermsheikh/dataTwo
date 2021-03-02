@@ -16,6 +16,46 @@ namespace api.Data
             _context = context;
         }
 
+//Customers
+        public void AddCustomer(Customer customer)
+        {
+            _context.Customers.Add(customer);
+        }
+
+        public async Task<ICollection<Customer>> GetCustomers(string customerType)
+        {
+            return await _context.Customers.Where(x => x.CustomerType == customerType)
+                .OrderBy(x => x.CustomerName).ToListAsync();
+        }
+
+        public async Task<Customer> GetCustomerByIdAsync(int Id)
+        {
+            return await _context.Customers.FindAsync(Id);
+        }
+        public async Task<Customer> GetCustomerByNameAsync(string customerName, string customerType)
+        {
+            return await _context.Customers.Where(x => x.CustomerName == customerName 
+                && x.CustomerType == customerType).FirstOrDefaultAsync();
+        }
+        public async Task<bool> CustomerExistsByIdAsync(int id)
+        {
+            return ((await _context.Customers.FindAsync(id)) != null);
+        }
+        public async Task<bool> CustomerExistsByNameCityTypeAsync(string customerName, string cityName, string customerType)
+        {
+            return ((await _context.Customers.AsNoTracking()
+                .FirstOrDefaultAsync(x => x.CustomerName == customerName 
+                    && x.CustomerType == customerType && x.City == cityName))
+                    !=null);
+        }
+        public void DeleteCustomer(Customer customer)
+        {
+            _context.Entry(customer).State = EntityState.Deleted;
+        }
+        public void EditCustomer(Customer customer)
+        {
+            _context.Entry(customer).State = EntityState.Modified;
+        }
 
 //Qualification
         public async Task<bool> QualificationExistsById (int Id)
@@ -112,14 +152,10 @@ namespace api.Data
             return ((await _context.Professions.FindAsync(Id))!=null);
         }
 
-        public async Task<bool> ProfessionExistsByName(string professionName, string industryName)
+        public async Task<bool> ProfessionExistsByName(string professionName)
         {
-            if ((await _context.Industries.AsNoTracking().FirstOrDefaultAsync(x => x.Name.ToLower() == industryName.ToLower()))!=null)
-                return false;
-
-            return ((await _context.Professions.AsNoTracking()
-                .FirstOrDefaultAsync(x => x.Name.ToLower() == professionName.ToLower() &&
-                x.Industry.ToLower() == industryName.ToLower()))!=null);
+            return (await _context.Professions.AsNoTracking()
+                .FirstOrDefaultAsync(x => x.Name.ToLower() == professionName.ToLower() )!=null);
         }
 
         public async Task<ICollection<Profession>> GetProfessions()
@@ -127,27 +163,13 @@ namespace api.Data
             return await _context.Professions.OrderBy(x => x.Name).ToListAsync();
         }
 
-        public async Task<ICollection<Profession>> GetProfessionsOfAnIndustry (string industryName)
+        public async Task<Profession> GetProfessionByName(string professionName)
         {
-            return await _context.Professions.Where(x => x.Industry.ToLower() == industryName.ToLower()).ToListAsync();
+            return await _context.Professions.FirstOrDefaultAsync(x => x.Name == professionName);
         }
-
-        public async Task<ICollection<Profession>> GetProfessionsOfLikeIndustry (string industryName)
+        public void AddProfession(string ProfessionName)
         {
-            var lst = new List<string>();
-            lst.Add(industryName);
-
-            return await _context.Professions
-                .Where(x => x.Industry.ToLower().Contains(industryName.ToLower())).ToListAsync();
-        }
-        
-        public async Task<Profession> GetProfessionByName(string professionName, string industryName)
-        {
-            return await _context.Professions.FirstOrDefaultAsync(x => x.Name == professionName && x.Industry == industryName);
-        }
-        public void AddProfession(string ProfessionName, string IndustryName)
-        {
-            _context.Professions.Add(new Profession(ProfessionName, IndustryName));
+            _context.Professions.Add(new Profession(ProfessionName));
         }
         
         public void DeleteProfession(Profession profession)

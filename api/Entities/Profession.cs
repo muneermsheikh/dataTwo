@@ -8,16 +8,13 @@ namespace api.Entities
         {
         }
 
-        public Profession(string name, string industry)
+        public Profession(string name)
         {
             Name = name;
-            Industry = industry;
         }
 
         public int Id { get; set; }
         [Required]
         public string Name { get; set; }
-        [Required]
-        public string Industry { get; set; }
     }
 }

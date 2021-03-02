@@ -29,30 +29,17 @@ namespace api.Controllers
             return Ok(profs);
         }
 
-        [HttpGet("profdto")]
-        public async Task<ActionResult<ICollection<ProfessionDto>>> GetProfessionsDto()
-        {
-            var profs = await _unitOfWork.MastersRepository.GetProfessions();
-            if (profs == null) return NotFound("No professions on record");
-            var dto = new List<ProfessionDto>();
-            foreach(var prof in profs)
-            {
-                dto.Add(new ProfessionDto(prof.Id, prof.Name + "-" + prof.Industry));
-            }
-            return Ok(dto);
-        }
-
         [HttpPost("prof")]
         public async Task<ActionResult<Profession>> AddProfession(AddProfDto profAddDto)
         {
             //check if the profession and industry exist
-            if (await _unitOfWork.MastersRepository.ProfessionExistsByName(profAddDto.Name, profAddDto.Industry)) 
-                return BadRequest("profession with its related industry exists");
+            if (await _unitOfWork.MastersRepository.ProfessionExistsByName(profAddDto.Name)) 
+                return BadRequest("profession exists");
             
-            _unitOfWork.MastersRepository.AddProfession(profAddDto.Name, profAddDto.Industry);
+            _unitOfWork.MastersRepository.AddProfession(profAddDto.Name);
 
             if (await _unitOfWork.Complete()) 
-                return Ok(await _unitOfWork.MastersRepository.GetProfessionByName(profAddDto.Name, profAddDto.Industry));
+                return Ok(await _unitOfWork.MastersRepository.GetProfessionByName(profAddDto.Name));
             
             return BadRequest("failed to add the profession");
 
@@ -75,19 +62,14 @@ namespace api.Controllers
         }
 
         [HttpPost("prof/{prof}/{industry}")]
-        public async Task<ActionResult<bool>> AddProfession(string prof, string industry)
+        public async Task<ActionResult<bool>> AddProfession(string prof)
         {
-            if (string.IsNullOrEmpty(prof) || string.IsNullOrEmpty(industry)) return  BadRequest("null values provided");
 
-            //check if industry exists
-            if (await _unitOfWork.MastersRepository.ProfessionExistsByName(prof, industry))
-                return BadRequest("either the industry '" + industry + "' does not exist, or the profession " + prof + " does not exist");
-
-            _unitOfWork.MastersRepository.AddProfession(prof, industry);
+            _unitOfWork.MastersRepository.AddProfession(prof);
 
             if (await _unitOfWork.Complete()) return true;
 
-            return BadRequest("Failed to add the profession '" + prof + "' under the industry " + industry);
+            return BadRequest("Failed to add the profession '" + prof);
         }
 
         [HttpPut("prof")]
@@ -117,23 +99,6 @@ namespace api.Controllers
             return Ok(inds);
         }
 
-        [HttpGet("profOfInds/{industryName}")]
-        public async Task<ActionResult<ICollection<Profession>>> GetProfessionsOfAnIndustry (string industryName)
-        {
-            var profs =await _unitOfWork.MastersRepository.GetProfessionsOfAnIndustry(industryName);
-            if (profs == null || profs.Count == 0) return NotFound("No professions found under the industry " + industryName);
-
-            return Ok(profs);
-        }
-
-        [HttpGet("profOfIndsLike/{industryName}")]
-        public async Task<ActionResult<ICollection<Profession>>> GetProfessionsOfLikeIndustry (string industryName)
-        {
-            var profs =await _unitOfWork.MastersRepository.GetProfessionsOfLikeIndustry(industryName);
-            if (profs == null || profs.Count == 0) return NotFound("No professions found under industry like " + industryName);
-
-            return Ok(profs);
-        }
 
         [HttpDelete("inds")]
         public async Task<ActionResult<bool>> DeleteIndustry(Industry industry)

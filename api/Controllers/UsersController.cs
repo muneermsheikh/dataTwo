@@ -34,18 +34,29 @@ namespace api.Controllers
             var gender = await _unitOfWork.UserRepository.GetUserGender(User.GetUsername());
             userParams.CurrentUsername = User.GetUsername();
 
-            //var users = await _userRepository.GetMembersAsync(userParams);
-            //use the flg to change userParams based on context of categories
-            if (string.IsNullOrEmpty(userParams.Gender))
-            {
-                userParams.Gender = gender;
-            }
-
             var users = await _unitOfWork.UserRepository.GetMembersAsync(userParams);
 
             Response.AddPaginationHeader(users.CurrentPage, users.PageSize,
                 users.TotalCount, users.TotalPages);
 
+            return Ok(users);
+        }
+
+        [HttpGet("associateswithoutpages")]
+        public async Task<ActionResult<ICollection<AssociateIdAndNameDto>>> GetAssociatessWithoutPaging(string userType)
+        {
+            var users = await _unitOfWork.UserRepository.GetCustomersWithoutPaginationAsync(userType);
+            if (users == null) return NotFound("your instructions did not return any records");
+            return Ok(users);
+        }
+
+
+        [HttpGet("userswithoutpages")]
+        public async Task<ActionResult<ICollection<MemberDto>>> GetUsersWithoutPaging([FromQuery] UserParams userParams)
+        {
+            var gender = await _unitOfWork.UserRepository.GetUserGender(User.GetUsername());
+            userParams.CurrentUsername = User.GetUsername();
+            var users = await _unitOfWork.UserRepository.GetMembersAsync(userParams);
             return Ok(users);
         }
 
